@@ -101,7 +101,6 @@ $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
 $writer->save(__DIR__ . "/result.pptx");
 
 ?>
-?>
 <h1>Complete</h1>
 <p>
       File Exists: <?=file_exists('result.pptx')?>

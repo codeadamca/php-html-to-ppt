@@ -15,6 +15,7 @@ require __DIR__ . '/vendor/autoload.php';
 use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\IOFactory;
 use PhpOffice\PhpPresentation\DocumentLayout;
+use PhpOffice\PhpPresentation\Slide;
 use PhpOffice\PhpPresentation\Style\Color;
 use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Slide\Background\Image;
@@ -22,85 +23,33 @@ use PhpOffice\PhpPresentation\Slide\Background\Image;
 // Create a new presentation
 $ppt = new PhpPresentation();
 $ppt->getLayout()->setDocumentLayout(DocumentLayout::LAYOUT_SCREEN_16X9);
+$ppt->removeSlideByIndex(0);
 
-// Create a new slide
-$slide = $ppt->getActiveSlide();
+// Open an existing PPT file and add one slide
+$reader = IOFactory::createReader('PowerPoint2007');
+$slides = $reader->load(__DIR__ . '/sample.pptx');
+$slides = $slides->getAllSlides();
+$ppt->addExternalSlide($slides[1], 0);
 
-// Add an image to the current slide
-$shape = $slide->createDrawingShape();
-$shape->setName('CodeAdam Logo')
-      ->setPath('./images/codeadam.png')
-      ->setWidth(100)
-      ->setOffsetX(430)
-      ->setOffsetY(50);
+/*
+ *
+ * For some reason if the code attempts to add two slides from an 
+ * external presentation, it causes the resulting PPT file to be
+ * corrupt. But if you re-open the existing PPT file in between adds
+ * the resulting PPT file is fine. 
+ * 
+ */
 
-// Add four text elements to the current slide
-$shape = $slide->createRichTextShape()
-      ->setHeight(50)
-      ->setWidth(960)
-      ->setOffsetX(0)
-      ->setOffsetY(180);
-$shape->getActiveParagraph()
-      ->getAlignment()
-      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-$textRun = $shape->createTextRun('Adam Thomas');
-$textRun->getFont()
-      ->setSize(30)
-      ->setColor(new Color('FFFFFF'))
-      ->setName('Helvetica');
-
-$shape = $slide->createRichTextShape()
-      ->setHeight(60)
-      ->setWidth(960)
-      ->setOffsetX(0)
-      ->setOffsetY(240);
-$shape->getActiveParagraph()
-      ->getAlignment()
-      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-$textRun = $shape->createTextRun('I Teach Code!');
-$textRun->getFont()
-      ->setSize(40)
-      ->setColor(new Color('eb062c'))
-      ->setName('Helvetica');
-
-$shape = $slide->createRichTextShape()
-      ->setHeight(40)
-      ->setWidth(960)
-      ->setOffsetX(0)
-      ->setOffsetY(310);
-$shape->getActiveParagraph()
-      ->getAlignment()
-      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-$textRun = $shape->createTextRun('Self-taught full-stack developer.');
-$textRun->getFont()
-      ->setSize(20)
-      ->setColor(new Color('FFFFFF'))
-      ->setName('Helvetica');
-
-$shape = $slide->createRichTextShape()
-      ->setHeight(40)
-      ->setWidth(960)
-      ->setOffsetX(0)
-      ->setOffsetY(360);
-$shape->getActiveParagraph()
-      ->getAlignment()
-      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-$textRun = $shape->createTextRun('Learning code and teaching code at Humber Polytechnic, Toronto, Canada.');
-$textRun->getFont()
-      ->setSize(20)
-      ->setColor(new Color('FFFFFF'))
-      ->setName('Helvetica');
-
-// Add a background image to the current slide
-$background = new Image();
-$background->setPath(__DIR__.'/images/ev3.jpg');
-$slide->setBackground($background);
+// Reopen an existing PPT file and add one slide
+$reader = IOFactory::createReader('PowerPoint2007');
+$slides = $reader->load(__DIR__ . '/sample.pptx');
+$slides = $slides->getAllSlides();
+$ppt->addExternalSlide($slides[2], 1);
 
 // Out put the PPT in memory to a file
 $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
 $writer->save(__DIR__ . "/result.pptx");
 
-?>
 ?>
 <h1>Complete</h1>
 <p>
