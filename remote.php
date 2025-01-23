@@ -43,14 +43,14 @@ $slide->addShape($shape);
 
 // Out put the PPT in memory to a file
 $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
-$writer->save(__DIR__ . "/sample.pptx");
+$writer->save(__DIR__ . "/result.pptx");
 
 ?>
 <h1>Complete</h1>
 <p>
-      File Exists: <?=file_exists('sample.pptx')?>
+      File Exists: <?=file_exists('result.pptx')?>
       <br>
-      File Size: <?=filesize('sample.pptx')?>
+      File Size: <?=filesize('result.pptx')?>
       <br>
-      Created: <?=date("F d, Y g:i:s a", filemtime('sample.pptx'))?>
+      Created: <?=date("F d, Y g:i:s a", filemtime('result.pptx'))?>
 </p>
