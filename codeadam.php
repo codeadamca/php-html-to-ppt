@@ -6,6 +6,9 @@ require __DIR__ . '/vendor/autoload.php';
  *
  * This example makes a 16:9 presentation which converts to 
  * 960 pixels wide by 540 pixels high. 
+ * 
+ * This example adds a locel image, text, and a background
+ * image.
  *
  */
 
@@ -96,3 +99,14 @@ $slide->setBackground($background);
 // Out put the PPT in memory to a file
 $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
 $writer->save(__DIR__ . "/sample.pptx");
+
+?>
+?>
+<h1>Complete</h1>
+<p>
+      File Exists: <?=file_exists('sample.pptx')?>
+      <br>
+      File Size: <?=filesize('sample.pptx')?>
+      <br>
+      Created: <?=date("F d, Y g:i:s a", filemtime('sample.pptx'))?>
+</p>
