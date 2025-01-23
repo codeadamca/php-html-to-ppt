@@ -35,8 +35,8 @@ $slide = $ppt->getActiveSlide();
 $shape = new Base64();
 $shape->setName('Sample image')
       ->setData($image)
-      ->setWidth(400)
-      ->setHeight(400)
+      ->setWidth(800)
+      ->setHeight(445)
       ->setOffsetX(10)
       ->setOffsetY(10);
 $slide->addShape($shape);
