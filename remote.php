@@ -19,6 +19,8 @@ use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Slide\Background\Image;
 use PhpOffice\PhpPresentation\Shape\Drawing\Base64;
 
+// Load the contents of an existing external image and
+// convert the contents to base64.
 $image = 'https://console.codeadam.ca/storage/articles/mywzrQxxvBHS4qDb71CL0EEtf0bcxJ6mtupNz4In.png';
 $contents = file_get_contents($image);
 $base64 = base64_encode($contents);
